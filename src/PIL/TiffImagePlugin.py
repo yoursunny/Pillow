@@ -1243,7 +1243,7 @@ class TiffImageFile(ImageFile.ImageFile):
         # subsequent frames in the image. Image may be
         # different size/mode.
         Image._decompression_bomb_check(self._tile_size)
-        self.im = Image.core.new(self.mode, self._tile_size)
+        self.im = Image.core.new(self.mode, self._tile_size, *self.mb_config)
 
     def _seek(self, frame: int) -> None:
         self.fp = self._fp
@@ -1325,7 +1325,7 @@ class TiffImageFile(ImageFile.ImageFile):
 
     def load_prepare(self) -> None:
         if self._im is None:
-            self.im = Image.core.new(self.mode, self._tile_size)
+            self.im = Image.core.new(self.mode, self._tile_size, *self.mb_config)
         ImageFile.ImageFile.load_prepare(self)
 
     def load_end(self) -> None:
